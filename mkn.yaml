@@ -4,12 +4,7 @@ name: lang.nanobind
 parent: lib
 
 profile:
-- name: base
-  if_arg:
-    nix: -fPIC
-
 - name: lib
-  parent: base
   inc: |
        b/include
        b/ext/robin_map/include, 0
@@ -19,11 +14,12 @@ profile:
   sub: nanobind&b(https://github.com/wjakob/nanobind)
 
 - name: mod
-  parent: base
   src: mod.cpp
   self: lib
   mode: none
   mod: lang.python3 lang.pybind11
   out: my_ext
   install: .
-  env: MKN_LIB_LINK_LIB=1
+  env: |
+    MKN_LIB_LINK_LIB=1
+    MKN_PYTHON_LIB_EMBED=1
