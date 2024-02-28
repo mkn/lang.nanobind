@@ -24,5 +24,5 @@ jobs:
         bash -c "rm /bin/link"
         bash -c "python3 -V"
         bash -c "curl -Lo mkn.exe https://github.com/mkn/mkn/releases/download/latest/mkn.exe"
-        bash -c "KLOG=3 ./mkn clean build -dtOa "-std:c++17 -EHsc"
+        bash -c "KLOG=3 ./mkn clean build -p mod -dtOa "-std:c++17 -EHsc"
         bash -c "python3 py.py"
