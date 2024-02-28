@@ -14,7 +14,8 @@ jobs:
 
     - name: "Build/Test" # contains slash so use quotes otherwise UB
       run: |
+        python3 -V
         curl -Lo mkn https://github.com/mkn/mkn/releases/download/latest/mkn_osx
         chmod +x mkn
-        KLOG=3 ./mkn
+        KLOG=3 ./mkn clean build -p mod -dtOa "-std=c++17 -fPIC"
         python3 py.py
