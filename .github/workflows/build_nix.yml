@@ -10,12 +10,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
-    - name: "Build/Test" # contains slash so use quotes otherwise UB
+    - name: "Build/Test"
       run: |
         python3 -V
         curl -Lo mkn https://github.com/mkn/mkn/releases/download/latest/mkn_nix
         chmod +x mkn
-        KLOG=3 ./mkn clean build -p mod -dtOa "-std=c++17 -fPIC"
+        KLOG=3 ./mkn clean build -p test -dtOa "-std=c++17 -fPIC"
         python3 py.py

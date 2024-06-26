@@ -1,4 +1,4 @@
-#! clean build -p mod -dO
+#! clean build -p test -dO
 
 name: lang.nanobind
 parent: lib
@@ -8,16 +8,16 @@ profile:
   inc: |
        b/include
        b/ext/robin_map/include, 0
-  src: b/src
+  src: b/src/nb_combined.cpp
   mod: lang.python3
   mode: static
   sub: nanobind&b(https://github.com/wjakob/nanobind)
 
-- name: mod
-  src: mod.cpp
+- name: test
+  src: test.cpp
   self: lib
   mode: none
-  mod: lang.python3 lang.pybind11
+  mod: lang.python3 python3.module
   out: my_ext
   install: .
   env: |
