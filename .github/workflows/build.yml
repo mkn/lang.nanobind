@@ -21,7 +21,7 @@ jobs:
         python3 -V
         $CURL_GET -o mkn ${PATH_GET}/mkn_nix
         chmod +x mkn
-        KLOG=3 ./mkn clean build -p test -dtOa "-std=c++17 -fPIC"
+        KLOG=3 ./mkn clean build -p test -dtOa "-std=c++20 -fPIC"
         python3 py.py
 
   macos:
@@ -34,7 +34,7 @@ jobs:
         python3 -V
         $CURL_GET -o mkn ${PATH_GET}/mkn_arm_osx
         chmod +x mkn
-        KLOG=3 ./mkn clean build -p test -dtOa "-std=c++17 -fPIC"
+        KLOG=3 ./mkn clean build -p test -dtOa "-std=c++20 -fPIC"
         python3 py.py
 
   windows:
@@ -54,5 +54,5 @@ jobs:
         bash -c "rm /bin/link"
         bash -c "python3 -V"
         bash -c '$CURL_GET -o mkn.exe ${PATH_GET}/mkn.exe'
-        bash -c 'KLOG=3 ./mkn clean build -p test -dtOa "-std:c++17 -EHsc"'
+        bash -c 'KLOG=3 ./mkn clean build -p test -dtOa "-std:c++20 -EHsc"'
         bash -c "python3 py.py"
