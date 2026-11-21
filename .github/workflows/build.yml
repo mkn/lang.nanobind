@@ -1,0 +1,58 @@
+name: build
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+env:
+  CURL_GET: curl -fL --retry 3 --retry-delay 2
+  PATH_GET: https://github.com/mkn/mkn/releases/latest/download
+
+jobs:
+  ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: "Build/Test"
+      run: |
+        python3 -V
+        $CURL_GET -o mkn ${PATH_GET}/mkn_nix
+        chmod +x mkn
+        KLOG=3 ./mkn clean build -p test -dtOa "-std=c++17 -fPIC"
+        python3 py.py
+
+  macos:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: "Build/Test"
+      run: |
+        python3 -V
+        $CURL_GET -o mkn ${PATH_GET}/mkn_arm_osx
+        chmod +x mkn
+        KLOG=3 ./mkn clean build -p test -dtOa "-std=c++17 -fPIC"
+        python3 py.py
+
+  windows:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: ilammy/msvc-dev-cmd@v1
+      with:
+        arch: amd64
+
+    - name: "Build/Test"
+      shell: cmd
+      env:
+        MKN_CL_PREFERRED: 1
+      run: | # /bin/link interferes with cl/link.exe
+        bash -c "rm /bin/link"
+        bash -c "python3 -V"
+        bash -c '$CURL_GET -o mkn.exe ${PATH_GET}/mkn.exe'
+        bash -c 'KLOG=3 ./mkn clean build -p test -dtOa "-std:c++17 -EHsc"'
+        bash -c "python3 py.py"
